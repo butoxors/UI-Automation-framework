@@ -1,8 +1,9 @@
-import config.Configuration;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.google.inject.Inject;
+import di.Graph;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import utils.ScreenshotUtils;
 import webDriver.WebDriverManager;
@@ -10,14 +11,15 @@ import webDriver.WebDriverManager;
 import java.time.LocalDate;
 
 public class BaseUITest {
-    protected WebDriverManager webDriverManager;
+    @Inject
+    private WebDriverManager webDriverManager;
 
-    @BeforeTest
     public void setUp() {
-        webDriverManager = new WebDriverManager();
-        webDriverManager.createDriver(Configuration.driverType);
-        webDriverManager.manageWebDriver();
-        webDriverManager.get().navigate().to(Configuration.url);
+        injectMembers();
+    }
+
+    private void injectMembers() {
+        Graph.createInjector().injectMembers(this);
     }
 
     @AfterMethod

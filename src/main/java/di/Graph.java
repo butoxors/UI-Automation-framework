@@ -13,8 +13,4 @@ public class Graph {
         injector = Guice.createInjector(new TestModule());
         return injector;
     }
-
-    public static Injector getInjector() {
-        return injector;
-    }
 }

@@ -1,10 +1,8 @@
 package webDriver;
 
-import com.google.inject.Inject;
 import com.google.inject.Provider;
 import config.Configuration;
 import enums.DriverType;
-import jdk.jfr.StackTrace;
 import org.openqa.selenium.WebDriver;
 import webDriver.factory.WebDriverFactory;
 

@@ -16,6 +16,10 @@ local.properties
 .recommenders
 Screenshots/
 .idea/*
+.idea/compiler.xml
+.idea/misc.xml
+.allure/*
+.allure
 
 # External tool builders
 .externalToolBuilders/

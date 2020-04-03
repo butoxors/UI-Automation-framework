@@ -1,0 +1,26 @@
+[
+  {
+    "name": "No data presence",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*NullPointerException.*"
+  },
+  {
+    "name": "No element presence",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Unable to locate element.*"
+  },
+  {
+    "name": "No element presence",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*NoSuchElementException.*"
+  },
+  {
+    "name": "Data issue",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*expected.*"
+  },
+  {
+    "name": "Test passed",
+    "matchedStatuses": ["passed"]
+  }
+]

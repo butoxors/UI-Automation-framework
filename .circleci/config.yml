@@ -3,7 +3,6 @@ jobs:
   first-job:
     docker:
       - image: maven:3.6.3-jdk-11
-      - image: circleci/openjdk:11-jdk
     steps:
       - checkout
       - restore_cache:

@@ -24,14 +24,14 @@ jobs:
       - image: selenium/standalone-chrome:3.11.0
     steps:
       - run:
-      name: create docker network
-      command: docker network create grid
+        name: create docker network
+        command: docker network create grid
       - run:
-      name: install selenium hub
-      command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
+        name: install selenium hub
+        command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
       - run:
-      name: install selenium chrome
-      command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
+        name: install selenium chrome
+        command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
   run-suite:
     - run:
       name: Run tests

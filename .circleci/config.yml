@@ -1,10 +1,11 @@
 version: 2.1
 jobs:
-  first-job:
+  setup-project:
     docker:
       - image: maven:3.6.3-jdk-11
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           keys:
             - v1-dependencies{{ checksum "pom.xml" }}
@@ -14,14 +15,34 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
+      - store_test_results:
+          path: target/surefire-reports
+      - store_artifacts:
+          - path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
+  run-selenium-server:
+    docker:
+      - image: selenium/standalone-chrome:3.11.0
+    steps:
       - run:
-          name: Run tests
-          command: >
-            mvn
-            -Dsuite=testng
-            clean test
+      name: create docker network
+      command: docker network create grid
+      - run:
+      name: install selenium hub
+      command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
+      - run:
+      name: install selenium chrome
+      command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
+  run-suite:
+    - run:
+      name: Run tests
+        command: >
+          mvn
+          -Dsuite=testng
+           clean test
 workflows:
   version: 2.1
   test_workflow:
     jobs:
-      - first-job
+      - setup-project
+      - run-selenium-server
+      - run-suite

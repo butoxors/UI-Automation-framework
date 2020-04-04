@@ -1,22 +1,36 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/circleci-feature9
+    working_directory: ~/crashCourseTestRepo
     docker:
       - image: maven:3.5.0-jdk-9
 
     steps:
       - checkout
 
-      - restore_cache:
-          key: circleci-feature9-{{ checksum "pom.xml" }}
+      - run:
+          name: Generate cumulative pom.xml checksum
+          command: |
+            find . -type f -name "pom.xml" -exec sh -c "sha256sum {} >> ~/pom-checksum.tmp" \;
+            sort -o ~/pom-checksum ~/pom-checksum.tmp
+          when: always
+            - restore_cache:
+              key: crashCourseTestRepo-{{ checksum "~/pom-checksum" }}
 
-      - run: mvn test
+      - restore_cache:
+          key: circleci-crashCourseTestRepo-{{ checksum "pom.xml" }}
+
+      - run: mvn dependency:go-offline # gets the project dependencies
 
       - save_cache:
           paths:
             - ~/.m2
-          key: circleci-feature9-{{ checksum "pom.xml" }}
+          key: crashCourseTestRepo-{{ checksum "pom.xml" }}
+
+      - run: mvn package
 
       - store_test_results:
           path: target/surefire-reports
+
+      - store_artifacts:
+          path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar

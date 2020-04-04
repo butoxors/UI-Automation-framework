@@ -25,18 +25,18 @@ commands:
             - store_artifacts:
                 path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
 
-    selenium-server:
-        description: "Run selenium server"
-        steps:
-            - run:
-                name: create docker network
-                command: docker network create grid
-            - run:
-                name: install selenium hub
-                command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
-            - run:
-                name: install selenium chrome
-                command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
+    #selenium-server:
+    #    description: "Run selenium server"
+    #    steps:
+    #        - run:
+    #            name: create docker network
+    #            command: docker network create grid
+    #        - run:
+    #            name: install selenium hub
+    #            command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
+    #        - run:
+    #            name: install selenium chrome
+    #            command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
     suite:
         description: "Run suite"
         steps:
@@ -52,7 +52,7 @@ jobs:
         executor: my-executor
         steps:
             - setup-project
-            - selenium-server
+            #- selenium-server
             - suite
 
 workflows:

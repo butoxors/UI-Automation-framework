@@ -55,7 +55,7 @@ jobs:
             - selenium-server
             - suite
 
-workflow:
+workflows:
     version: 2.1
     build:
         jobs:

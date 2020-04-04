@@ -7,21 +7,13 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
-          key: circleci-crashCourseTestRepo-{{ checksum "pom.xml" }}
-
-      - run: mvn dependency:go-offline # gets the project dependencies
-
+          keys:
+            - v1-dependencies{{ checksum "pom.xml" }}
+            - v1-dependencies-
+      - run: mvn clean install
       - save_cache:
           paths:
             - ~/.m2
-          key: crashCourseTestRepo-{{ checksum "pom.xml" }}
-
-      - run: mvn package
-
-      - store_test_results:
-          path: target/surefire-reports
-
-      - store_artifacts:
-          path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+      - run: mvn clean test

@@ -18,9 +18,9 @@ jobs:
       - run:
           name: Run tests
           command: >
-            -mvn
+            mvn
             -Dsuite=testng
-            -clean test
+            clean test
 workflows:
   version: 2.1
   test_workflow:

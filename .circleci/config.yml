@@ -1,62 +1,62 @@
 version: 2.1
 
 executors:
-  my-executor:
-    docker:
-      - image: maven:3.6.3-jdk-11
-      - image: selenium/standalone-chrome:3.11.0
+    my-executor:
+        docker:
+            - image: maven:3.6.3-jdk-11
+            - image: selenium/standalone-chrome:3.11.0
 
 commands:
-  setup-project:
-    description: "Setup project"
-    steps:
-      - checkout
-      - restore_cache:
-        keys:
-          - v1-dependencies{{ checksum "pom.xml" }}
-          - v1-dependencies-
-      - run: mvn dependency:go-offline
-      - save_cache:
-        paths:
-            - ~/.m2
-        key: v1-dependencies-{{ checksum "pom.xml" }}
-      - store_test_results:
-          path: target/surefire-reports
-      - store_artifacts:
-          path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
+    setup-project:
+        description: "Setup project"
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-dependencies{{ checksum "pom.xml" }}
+                    - v1-dependencies-
+            - run: mvn dependency:go-offline
+            - save_cache:
+                paths:
+                    - ~/.m2
+                key: v1-dependencies-{{ checksum "pom.xml" }}
+            - store_test_results:
+                path: target/surefire-reports
+            - store_artifacts:
+                path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
 
-  selenium-server:
-    description: "Run selenium server"
-    steps:
-      - run:
-          name: create docker network
-          command: docker network create grid
-      - run:
-          name: install selenium hub
-          command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
-      - run:
-          name: install selenium chrome
-          command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
-  suite:
-    description: "Run suite"
-    steps:
-      - run:
-          name: Run tests
-          command: >
-            mvn
-            -Dsuite=testng
-            clean test
+    selenium-server:
+        description: "Run selenium server"
+        steps:
+            - run:
+                name: create docker network
+                command: docker network create grid
+            - run:
+                name: install selenium hub
+                command: docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-20200326
+            - run:
+                name: install selenium chrome
+                command: docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-20200326
+    suite:
+        description: "Run suite"
+        steps:
+            - run:
+                name: Run tests
+                command: >
+                  mvn
+                  -Dsuite=testng
+                  clean test
 
 jobs:
-  general_job:
-    executor: my-executor
-    steps:
-      - setup-project
-      - selenium-server
-      - suite
+    general_job:
+        executor: my-executor
+        steps:
+            - setup-project
+            - selenium-server
+            - suite
 
 workflow:
-  version: 2.1
-  build:
-    jobs:
-      - general_job
+    version: 2.1
+    build:
+        jobs:
+            - general_job

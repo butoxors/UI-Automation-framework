@@ -28,7 +28,7 @@ commands:
                   path: target/surefire-reports
             - store_artifacts:
                   path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
-            -run: mvn test
+            - run: mvn test
 
 jobs:
     general_job:

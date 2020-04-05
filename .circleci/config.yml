@@ -48,11 +48,7 @@ commands:
         steps:
             - run:
                 name: Run tests
-                command: >
-                    mvn
-                #    -X
-                #    -Dsuite=testng
-                    clean test
+                command: mvn clean test
 
 jobs:
     general_job:

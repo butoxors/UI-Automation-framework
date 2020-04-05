@@ -6,6 +6,9 @@ executors:
             #- image: maven:3.6.3-jdk-11
             - image: circleci/openjdk:9.0.4-jdk
             - image: selenium/standalone-chrome:3.11.0
+        environment:
+            # Customize the JVM maximum heap limit
+            MAVEN_OPTS: -Xmx3200m
 
 commands:
     setup-project:
@@ -16,7 +19,6 @@ commands:
                 keys:
                     - v1-dependencies{{ checksum "pom.xml" }}
                     - v1-dependencies-
-            - run: mvn install
             - run: mvn dependency:go-offline
             - save_cache:
                 paths:
@@ -30,7 +32,6 @@ commands:
     selenium-server:
         description: "Run selenium server"
         steps:
-            - checkout
             - run: mkdir test-reports
             - run:
                 name: Download Selenium
@@ -44,7 +45,6 @@ commands:
     suite:
         description: "Run suite"
         steps:
-            - checkout
             - run:
                 name: Run tests
                 command: mvn clean test

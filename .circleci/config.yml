@@ -3,8 +3,8 @@ version: 2.1
 executors:
     my-executor:
         docker:
-            - image: maven:3.6.3-jdk-11
-            #- image: circleci/openjdk:9.0.4-jdk
+            #- image: maven:3.6.3-jdk-11
+            - image: circleci/openjdk:9.0.4-jdk
             - image: selenium/standalone-chrome:3.11.0
         environment:
             # Customize the JVM maximum heap limit

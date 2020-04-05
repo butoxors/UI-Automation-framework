@@ -28,6 +28,8 @@ commands:
     selenium-server:
         description: "Run selenium server"
         steps:
+            - checkout
+            - run: mkdir test-reports
             - run:
                 name: Download Selenium
                 command: |
@@ -40,6 +42,7 @@ commands:
     suite:
         description: "Run suite"
         steps:
+            - checkout
             - run:
                 name: Run tests
                 command: >

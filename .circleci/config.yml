@@ -5,9 +5,13 @@ executors:
         docker:
             - image: maven:3.6.3-jdk-11
             - image: selenium/standalone-chrome:3.11.0
+        working_directory: ~/atc
         environment:
             # Customize the JVM maximum heap limit
             MAVEN_OPTS: -Xmx3200m
+
+orbs:
+    slack: circleci/slack@3.4.2
 
 commands:
     setup-project:
@@ -28,20 +32,6 @@ commands:
                 path: target/surefire-reports
             - store_artifacts:
                 path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
-
-    selenium-server:
-        description: "Run selenium server"
-        steps:
-            - run: mkdir test-reports
-            - run:
-                name: Download Selenium
-                command: |
-                    curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-            - run:
-                name: Start Selenium
-                command: |
-                    java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-                background: true
     suite:
         description: "Run suite"
         steps:
@@ -54,7 +44,6 @@ jobs:
         executor: my-executor
         steps:
             - setup-project
-            - selenium-server
             - suite
 
 workflows:

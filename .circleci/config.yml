@@ -19,7 +19,7 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v1-dependencies{{ checksum "pom.xml" }}
+                      - v1-dependencies-{{ checksum "pom.xml" }}
                       - v1-dependencies-
             - run: mvn install
             - run: mvn dependency:go-offline

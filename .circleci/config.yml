@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 executors:
     my-executor:
@@ -38,7 +38,7 @@ jobs:
             - setup-project
 
 workflows:
-    version: 2
+    version: 2.1
     build:
         jobs:
             - general_job

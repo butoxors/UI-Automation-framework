@@ -148,9 +148,9 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <suiteXmlFiles>
+<!--                    <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/suits/${suite.name}</suiteXmlFile>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles>-->
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
                 <dependencies>

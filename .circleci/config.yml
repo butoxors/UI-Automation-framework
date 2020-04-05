@@ -50,8 +50,8 @@ commands:
                 name: Run tests
                 command: >
                     mvn
-                    -X
-                    -Dsuite=testng
+                #    -X
+                #    -Dsuite=testng
                     clean test
 
 jobs:

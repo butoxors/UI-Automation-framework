@@ -151,6 +151,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/suits/${suite.name}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
                 <dependencies>
                     <dependency>

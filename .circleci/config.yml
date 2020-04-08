@@ -131,7 +131,7 @@ commands:
                       << parameters.results-path >>;
             - store_artifacts:
                 path: << parameters.target-path >>
-                    destination: << parameters.artifact-path >>
+                destination: << parameters.artifact-path >>
             - store_artifacts:
                 path: << parameters.artifact-archive >>
 

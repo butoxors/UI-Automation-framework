@@ -123,13 +123,3 @@ workflows:
     build:
         jobs:
             - general_job
-    nightly:
-        triggers:
-            - schedule:
-                cron: "* * * * *"
-                filters:
-                    branches:
-                        only:
-                            - master
-        jobs:
-            - general_job

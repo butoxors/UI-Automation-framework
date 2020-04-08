@@ -21,7 +21,7 @@ commands:
         steps:
             - allure-install
             - checkout
-            - run: chmod -R 777 ./repo
+            - run: chmod -R 777 ./tmp
             - restore_cache:
                   keys:
                       - v1-dependencies-{{ checksum "pom.xml" }}

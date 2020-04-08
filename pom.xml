@@ -15,8 +15,6 @@
         <testng.version>6.14.3</testng.version>
         <allure.version>2.13.1</allure.version>
         <spring-framework.version>4.0.2.RELEASE</spring-framework.version>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -190,8 +188,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>13</source>
-                    <target>13</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
         </plugins>

@@ -21,16 +21,15 @@ commands:
         steps:
             - allure-install
             - checkout
-            - run: chmod -R 777 ~/repo
             - restore_cache:
                   keys:
-                      - v1-dependencies-{{ checksum "pom.xml" }}
-                      - v1-dependencies-
+                      - v2-dependencies-{{ checksum "pom.xml" }}
+                      - v2-dependencies-
             - run: mvn dependency:go-offline
             - save_cache:
                   paths:
                       - ~/.m2
-                  key: v1-dependencies-{{ checksum "pom.xml" }}
+                  key: v2-dependencies-{{ checksum "pom.xml" }}
 
             - run: sudo apt-get update
             - run: sudo apt-get install libnss3-dev

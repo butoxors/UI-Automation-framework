@@ -115,7 +115,7 @@ jobs:
     general_job:
         executor: my-executor
         steps:
-            - setup-project
+            - setup-project:
                 suite: "testng"
 
 workflows:

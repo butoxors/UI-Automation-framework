@@ -19,6 +19,7 @@ commands:
                 type: string
         description: "Setup project"
         steps:
+            - allure-install
             - checkout
             - restore_cache:
                   keys:
@@ -41,75 +42,85 @@ commands:
                 -Dsuite=<< parameters.suite >>
                 clean verify site
 
+            - allure-report:
+                  results-path: target/allure-results
+                  artifact-archive: allure-<< parameters.suite >>.tar
+            - run:
+                  name: Remove redundant test results
+                  when: always
+                  command: |
+                      cd target/test-output
+                      rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
             - run:
                 name: Archive artifacts
                 when: always
-                command: tar -cvf artifacts-<< parameters.suite >>.tar target/test-log target/xray target/test-output;
+                command: >
+                    tar -cvf artifacts-<< parameters.suite >>.tar;
+                    target/test-log
+                    target/test-output;
             - store_artifacts:
                 path: artifacts-<< parameters.suite >>.tar
             - run:
-                name: Remove redundant test results
-                when: always
-                command: |
-                    cd target/test-output
-                    rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
+                  name: Remove redundant test results
+                  when: always
+                  command: |
+                      cd target/test-output
+                      rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
             - store_test_results:
                 path: target/test-output
-            - allure-report:
-                results-path: target/allure-results
 
-allure-install:
-    description: Installs Allure Framework and registers it as /usr/local/bin/allure
-    parameters:
-        version:
-            description: Allure version to use
-            type: string
-            default: 2.13.1
-    steps:
-        - run:
-            name: Allure archive download
-            command: curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
-        - run:
-            name: Archive extraction
-            command: unzip /tmp/allure.zip
-        - run:
-            name: Allure installation
-            command: sudo mv allure-<< parameters.version >> /usr/local/share/allure
-        - run:
-            name: Allure binary symlinking
-            command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
+    allure-install:
+        description: Installs Allure Framework and registers it as /usr/local/bin/allure
+        parameters:
+            version:
+                description: Allure version to use
+                type: string
+                default: 2.13.1
+        steps:
+            - run:
+                name: Allure archive download
+                command: curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
+            - run:
+                name: Archive extraction
+                command: unzip /tmp/allure.zip
+            - run:
+                name: Allure installation
+                command: sudo mv allure-<< parameters.version >> /usr/local/share/allure
+            - run:
+                name: Allure binary symlinking
+                command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
 
-allure-report:
-    description: Generates report using Allure Framework
-    parameters:
-        configuration-path:
-            description: Path to Allure configuration, uses default one if omitted
-            type: string
-            default: /usr/local/share/allure/config/allure.yml
-        target-path:
-            description: Path for report directory
-            type: string
-            default: allure-report
-        results-path:
-            description: Path to directory with test results
-            type: string
-            default: allure-results
-        artifact-path:
-            description: Path that will be used when storing result as artifact
-            type: string
-            default: Report/Allure
-    steps:
-        - run:
-              name: Allure report generation (<< parameters.results-path >> -> << parameters.target-path >>)
-              when: always
-              command: |
-                  allure generate \
-                    --config << parameters.configuration-path >> \
-                    --report-dir << parameters.target-path >> \
-                    << parameters.results-path >>
-        - store_artifacts:
-              path: << parameters.target-path >>
-              destination: << parameters.artifact-path >>
+    allure-report:
+        description: Generates report using Allure Framework
+        parameters:
+            configuration-path:
+                description: Path to Allure configuration, uses default one if omitted
+                type: string
+                default: /usr/local/share/allure/config/allure.yml
+            target-path:
+                description: Path for report directory
+                type: string
+                default: allure-report
+            results-path:
+                description: Path to directory with test results
+                type: string
+                default: allure-results
+            artifact-path:
+                description: Path that will be used when storing result as artifact
+                type: string
+                default: Report/Allure
+        steps:
+            - run:
+                  name: Allure report generation (<< parameters.results-path >> -> << parameters.target-path >>)
+                  when: always
+                  command: |
+                      allure generate \
+                        --config << parameters.configuration-path >> \
+                        --report-dir << parameters.target-path >> \
+                        << parameters.results-path >>
+            - store_artifacts:
+                  path: << parameters.target-path >>
+                  destination: << parameters.artifact-path >>
 
 jobs:
     general_job:

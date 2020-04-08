@@ -131,6 +131,6 @@ jobs:
 
 workflows:
     version: 2.1
-    build:
+    workflow:
         jobs:
             - general_job

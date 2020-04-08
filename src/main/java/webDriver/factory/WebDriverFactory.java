@@ -22,12 +22,12 @@ public class WebDriverFactory {
     }
 
     protected WebDriver createChromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\webDrivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webDrivers\\chromedriver.exe");
         return new ChromeDriver();
     }
 
     protected WebDriver createFirefoxDriver() {
-        System.setProperty("webdriver.gecko.driver", "src\\main\\resources\\webDrivers\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\webDrivers\\geckodriver.exe");
         return new FirefoxDriver();
     }
 }

@@ -14,7 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testng.version>6.14.3</testng.version>
         <allure.version>2.13.1</allure.version>
-        <suite.name>testng.xml</suite.name>
         <spring-framework.version>4.0.2.RELEASE</spring-framework.version>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
@@ -149,7 +148,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/suits/${suite.name}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/suits/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
@@ -161,14 +160,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-<!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>-->
+
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
@@ -193,6 +185,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

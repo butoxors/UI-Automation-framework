@@ -3,14 +3,20 @@ version: 2.1
 executors:
     my-executor:
         docker:
-            - image: circleci/openjdk:9.0-jdk
-        working_directory: ~/atc
+            - image: circleci/openjdk:11.0.6-jdk-buster
+        working_directory: ~/repo
         environment:
             # Customize the JVM maximum heap limit
             MAVEN_OPTS: -Xmx3200m
 
+orbs:
+    slack: circleci/slack@3.4.2
+
 commands:
     setup-project:
+        parameters:
+            suite:
+                type: string
         description: "Setup project"
         steps:
             - checkout
@@ -23,20 +29,105 @@ commands:
                   paths:
                       - ~/.m2
                   key: v1-dependencies-{{ checksum "pom.xml" }}
-            - store_test_results:
-                  path: target/surefire-reports
+
+            - run: sudo apt-get update
+            - run: sudo apt-get install libnss3-dev
+            - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            - run: sudo apt install ./google-chrome-stable_current_amd64.deb
+            - run: chmod 777 /home/circleci/repo/src/test/resources/webdrivers/chromedriver
+
+            - run: >
+                mvn
+                -Dsuite=<< parameters.suite >>
+                clean verify site
+
+            - run:
+                name: Archive artifacts
+                when: always
+                command: tar -cvf artifacts-<< parameters.suite >>.tar target/test-log target/xray target/test-output;
             - store_artifacts:
-                  path: target/crashCourseTestRepo-1.0-SNAPSHOT.jar
-            - run: mvn clean test
+                path: artifacts-<< parameters.suite >>.tar
+            - run:
+                name: Remove redundant test results
+                when: always
+                command: |
+                    cd target/test-output
+                    rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
+            - store_test_results:
+                path: target/test-output
+            - allure-report:
+                results-path: target/allure-results
+
+allure-install:
+    description: Installs Allure Framework and registers it as /usr/local/bin/allure
+    parameters:
+        version:
+            description: Allure version to use
+            type: string
+            default: 2.13.1
+    steps:
+        - run:
+            name: Allure archive download
+            command: curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
+        - run:
+            name: Archive extraction
+            command: unzip /tmp/allure.zip
+        - run:
+            name: Allure installation
+            command: sudo mv allure-<< parameters.version >> /usr/local/share/allure
+        - run:
+            name: Allure binary symlinking
+            command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
+
+allure-report:
+    description: Generates report using Allure Framework
+    parameters:
+        configuration-path:
+            description: Path to Allure configuration, uses default one if omitted
+            type: string
+            default: /usr/local/share/allure/config/allure.yml
+        target-path:
+            description: Path for report directory
+            type: string
+            default: allure-report
+        results-path:
+            description: Path to directory with test results
+            type: string
+            default: allure-results
+        artifact-path:
+            description: Path that will be used when storing result as artifact
+            type: string
+            default: Report/Allure
+    steps:
+        - run:
+              name: Allure report generation (<< parameters.results-path >> -> << parameters.target-path >>)
+              when: always
+              command: |
+                  allure generate \
+                    --config << parameters.configuration-path >> \
+                    --report-dir << parameters.target-path >> \
+                    << parameters.results-path >>
+        - store_artifacts:
+              path: << parameters.target-path >>
+              destination: << parameters.artifact-path >>
 
 jobs:
     general_job:
         executor: my-executor
         steps:
             - setup-project
+                suite: "testng"
 
 workflows:
     version: 2.1
     build:
         jobs:
             - general_job
+    nightly:
+        triggers:
+            - schedule:
+                cron: "0 10 * * *"
+                    filters:
+                        branches:
+                            only:
+                                - master

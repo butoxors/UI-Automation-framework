@@ -2,6 +2,8 @@ version: 2.1
 
 executors:
     my-executor:
+        docker:
+            - image: circleci/openjdk:11.0.6-jdk-buster
         working_directory: ~/repo
         environment:
             # Customize the JVM maximum heap limit
@@ -30,7 +32,6 @@ commands:
                   key: v2-dependencies-{{ checksum "pom.xml" }}
 
             - run: sudo apt-get update
-            - run: sudo apt install oracle-java11-installer
             - run: sudo apt-get install libnss3-dev
             - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - run: sudo apt install ./google-chrome-stable_current_amd64.deb

@@ -39,7 +39,6 @@ commands:
 
             - run: >
                 mvn
-                -X
                 -DforkCount=0
                 -Dsuite=<< parameters.suite >>
                 clean verify site

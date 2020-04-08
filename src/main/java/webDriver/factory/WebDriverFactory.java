@@ -3,7 +3,6 @@ package webDriver.factory;
 import enums.DriverType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverFactory {
     public WebDriver createWebDriver(DriverType driverType) {
@@ -12,9 +11,6 @@ public class WebDriverFactory {
             case CHROME:
                 driver = createChromeDriver();
                 break;
-            case FIREFOX:
-                driver = createFirefoxDriver();
-                break;
             default:
                 throw new RuntimeException("Unknown web driver type. Need to be added to webDriver.factory");
         }
@@ -22,12 +18,7 @@ public class WebDriverFactory {
     }
 
     protected WebDriver createChromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webDrivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webdrivers\\chromedriver.exe");
         return new ChromeDriver();
-    }
-
-    protected WebDriver createFirefoxDriver() {
-        System.setProperty("webdriver.gecko.driver", "src\\test\\resources\\webDrivers\\geckodriver.exe");
-        return new FirefoxDriver();
     }
 }

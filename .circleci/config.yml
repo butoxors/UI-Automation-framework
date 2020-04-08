@@ -109,6 +109,10 @@ commands:
                 description: Path that will be used when storing result as artifact
                 type: string
                 default: Report/Allure
+            artifact-archive:
+                description: Archive name that will be used for storing artifact archive
+                type: string
+                default: allure-artifacts.tar
         steps:
             - run:
                   name: Allure report generation (<< parameters.results-path >> -> << parameters.target-path >>)
@@ -118,9 +122,18 @@ commands:
                         --config << parameters.configuration-path >> \
                         --report-dir << parameters.target-path >> \
                         << parameters.results-path >>
+            - run:
+                  name: Archive Allure artifacts
+                  when: always
+                  command: >
+                      tar -cvf << parameters.artifact-archive >>
+                      << parameters.target-path >>
+                      << parameters.results-path >>;
             - store_artifacts:
-                  path: << parameters.target-path >>
-                  destination: << parameters.artifact-path >>
+                path: << parameters.target-path >>
+                    destination: << parameters.artifact-path >>
+            - store_artifacts:
+                path: << parameters.artifact-archive >>
 
 jobs:
     general_job:

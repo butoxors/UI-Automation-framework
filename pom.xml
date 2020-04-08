@@ -140,8 +140,6 @@
                 <configuration>
                     <skipTests>false</skipTests>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <forkCount>3</forkCount>
-                    <reuseForks>true</reuseForks>
                     <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -149,7 +147,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/suits/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
 
                 <dependencies>

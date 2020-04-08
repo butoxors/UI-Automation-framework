@@ -35,7 +35,7 @@ commands:
             - run: sudo apt-get install libnss3-dev
             - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - run: sudo apt install ./google-chrome-stable_current_amd64.deb
-            - run: chmod 777 /home/circleci/repo/src/test/resources/webdrivers/chromedriver.exe
+            - run: chmod 777 /home/circleci/repo/src/main/resources/webdrivers/chromedriver
 
             - run: >
                 mvn

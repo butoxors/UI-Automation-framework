@@ -149,7 +149,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/suits/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <useSystemClassLoader>true</useSystemClassLoader>
                 </configuration>
 
                 <dependencies>

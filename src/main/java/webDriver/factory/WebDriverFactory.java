@@ -20,7 +20,7 @@ public class WebDriverFactory {
     }
 
     protected WebDriver createChromeDriver() {
-        String prefix = System.getProperty("os.name").contains("win") ? ".exe" : "";
+        String prefix = System.getProperty("os.name").contains("Win") ? ".exe" : "";
         System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webdrivers\\" + webDriverName + prefix);
         return new ChromeDriver();
     }

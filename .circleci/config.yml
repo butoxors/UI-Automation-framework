@@ -39,7 +39,6 @@ commands:
 
             - run: >
                 mvn
-                -DforkCount=0
                 -Dsuite=<< parameters.suite >>
                 clean verify test
 

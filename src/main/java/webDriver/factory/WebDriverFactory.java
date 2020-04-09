@@ -4,6 +4,8 @@ import enums.DriverType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static config.Configuration.webDriverName;
+
 public class WebDriverFactory {
     public WebDriver createWebDriver(DriverType driverType) {
         WebDriver driver;
@@ -18,7 +20,8 @@ public class WebDriverFactory {
     }
 
     protected WebDriver createChromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webdrivers\\chromedriver.exe");
+        String prefix = System.getProperty("os.name").contains("win") ? ".exe" : "";
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webdrivers\\" + webDriverName + prefix);
         return new ChromeDriver();
     }
 }

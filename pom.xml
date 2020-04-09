@@ -136,6 +136,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
+                    <forkCount>0</forkCount>
                     <skipTests>false</skipTests>
                     <testFailureIgnore>true</testFailureIgnore>
                     <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
@@ -146,8 +147,6 @@
                         <suiteXmlFile>src/test/resources/suits/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <useSystemClassLoader>false</useSystemClassLoader>
-                    <parallel>instance</parallel>
-                    <threadCount>10</threadCount>
                 </configuration>
 
                 <dependencies>

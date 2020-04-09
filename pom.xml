@@ -147,6 +147,8 @@
                         <suiteXmlFile>src/test/resources/suits/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <useSystemClassLoader>false</useSystemClassLoader>
+                    <parallel>false</parallel>
+                    <threadCount>1</threadCount>
                 </configuration>
 
                 <dependencies>

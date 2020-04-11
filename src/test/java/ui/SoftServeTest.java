@@ -1,9 +1,7 @@
 package ui;
 
-import allure.TestNGCustomListener;
 import com.google.inject.Inject;
 import io.qameta.allure.*;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageObject.SoftServePage;
 
@@ -11,7 +9,6 @@ import java.util.NoSuchElementException;
 
 import static enums.SuiteGroups.SoftServeGroup;
 
-@Listeners({TestNGCustomListener.class})
 @Epic("Smoke Tests")
 @Feature("Search Tests")
 public class SoftServeTest extends BaseUITest {

@@ -22,7 +22,9 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        saveScreenshotPNG(WebDriverContainer.getWebDriver());
+        if (WebDriverContainer.getWebDriver() != null) {
+            saveScreenshotPNG(WebDriverContainer.getWebDriver());
+        }
         if (result.getThrowable() != null)
             result.getThrowable().printStackTrace();
     }
@@ -44,7 +46,8 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-
+        if (WebDriverContainer.getWebDriver() != null)
+            WebDriverContainer.getWebDriver().quit();
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")

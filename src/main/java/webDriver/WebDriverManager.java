@@ -1,6 +1,5 @@
 package webDriver;
 
-import com.google.inject.Inject;
 import com.google.inject.Provider;
 import config.Configuration;
 import enums.DriverType;
@@ -12,9 +11,7 @@ import java.util.concurrent.TimeUnit;
 import static config.Configuration.implicitWaitTimeOut;
 
 public class WebDriverManager implements Provider<WebDriver> {
-    @Inject
     private WebDriver driver;
-    
     private static final DriverType DRIVER_TYPE = Configuration.driverType;
 
     public WebDriverManager() {

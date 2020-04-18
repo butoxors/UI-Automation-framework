@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import static config.Configuration.implicitWaitTimeOut;
 
-public class WebDriverManager implements Provider<WebDriver> {
+public final class WebDriverManager implements Provider<WebDriver> {
 
     @Inject
     private WebDriver driver;

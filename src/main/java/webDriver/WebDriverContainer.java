@@ -3,6 +3,7 @@ package webDriver;
 import org.openqa.selenium.WebDriver;
 
 public class WebDriverContainer {
+
     private static final ThreadLocal<WebDriver> threadLocalScope = new ThreadLocal();
 
     public WebDriverContainer() {

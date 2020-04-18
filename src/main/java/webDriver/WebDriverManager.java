@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import static config.Configuration.implicitWaitTimeOut;
 
-public final class WebDriverManager implements Provider<WebDriver> {
+public class WebDriverManager implements Provider<WebDriver> {
 
-    private WebDriver driver = null;
+    private WebDriver driver;
     private static final DriverType DRIVER_TYPE = Configuration.driverType;
 
     public WebDriverManager() {

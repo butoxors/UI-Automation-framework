@@ -42,27 +42,8 @@ commands:
                 -Dsuite=<< parameters.suite >>
                 verify test
 
-            - run:
-                  name: Archive artifacts
-                  when: always
-                  command: >
-                      tar -cvf artifacts-<< parameters.suite >>.tar;
-                      target/test-log
-                      target/test-output;
-            - run:
-                  name: Remove redundant test results
-                  when: always
-                  command: |
-                      cd target/test-output
-                      rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
             - store_artifacts:
                 path: artifacts-<< parameters.suite >>.tar
-            - run:
-                  name: Remove redundant test results
-                  when: always
-                  command: |
-                      cd target/test-output
-                      rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
             - store_test_results:
                 path: target/test-output
             - allure-report:

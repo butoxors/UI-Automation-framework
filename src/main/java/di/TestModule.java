@@ -12,8 +12,8 @@ public class TestModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        this.bind(WebDriver.class).toProvider(WebDriverManager.class).in(Scopes.SINGLETON);
         this.bind(WebDriverManager.class).in(Scopes.SINGLETON);
+        this.bind(WebDriver.class).toProvider(WebDriverManager.class).in(Scopes.SINGLETON);
         this.bind(WebDriverWaitUtils.class).in(Scopes.SINGLETON);
     }
 }

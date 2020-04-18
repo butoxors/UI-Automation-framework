@@ -21,7 +21,6 @@ public class SoftServeTest extends BaseUITest {
     @Issue("COM-1")
     @Severity(SeverityLevel.NORMAL)
     public void verifySearch() {
-        //setUp();
         softServePage.enterSearchQuery("academy");
         softServePage.verifyThatResultIsPresence("IT Академія");
     }
@@ -32,7 +31,6 @@ public class SoftServeTest extends BaseUITest {
     @Issue("COM-2")
     @Severity(SeverityLevel.NORMAL)
     public void verifySearch2() {
-        setUp();
         throw new NoSuchElementException("Element doesn't exist on the page");
     }
 
@@ -42,7 +40,6 @@ public class SoftServeTest extends BaseUITest {
     @Issue("COM-3")
     @Severity(SeverityLevel.NORMAL)
     public void verifySearch3() {
-        setUp();
         softServePage.enterSearchQuery("academy");
         softServePage.verifyThatResultIsPresence("IT Академія-2020");
     }
@@ -53,7 +50,6 @@ public class SoftServeTest extends BaseUITest {
     @Issue("COM-4")
     @Severity(SeverityLevel.NORMAL)
     public void verifySearch4() {
-        setUp();
         throw new NullPointerException("data not found");
     }
 }

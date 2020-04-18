@@ -14,7 +14,6 @@ public abstract class BaseUITest {
     @Inject
     private WebDriverManager webDriverManager;
 
-    @BeforeMethod
     public void setUp() {
         injectMembers();
     }

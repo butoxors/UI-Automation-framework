@@ -4,7 +4,7 @@ import allure.TestNGCustomListener;
 import com.google.inject.Inject;
 import di.Graph;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import webDriver.WebDriverManager;
 
@@ -13,6 +13,7 @@ public abstract class BaseUITest {
     @Inject
     private WebDriverManager webDriverManager;
 
+    @BeforeMethod
     public void setUp() {
         injectMembers();
     }

@@ -1,6 +1,5 @@
 package webDriver;
 
-import com.google.inject.Inject;
 import com.google.inject.Provider;
 import config.Configuration;
 import enums.DriverType;

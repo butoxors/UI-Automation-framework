@@ -21,7 +21,7 @@ public class SoftServeTest extends BaseUITest {
     @Issue("COM-1")
     @Severity(SeverityLevel.NORMAL)
     public void verifySearch() {
-        setUp();
+        //setUp();
         softServePage.enterSearchQuery("academy");
         softServePage.verifyThatResultIsPresence("IT Академія");
     }

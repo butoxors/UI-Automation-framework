@@ -22,9 +22,9 @@ public class WebDriverFactory {
 
     protected WebDriver createChromeDriver() {
         String prefix = System.getProperty("os.name").contains("Win") ? ".exe" : "";
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/" + webDriverName + prefix);
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\webdrivers\\" + webDriverName + prefix);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors");
-        return new ChromeDriver();
+        return new ChromeDriver(options);
     }
 }

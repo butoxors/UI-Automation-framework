@@ -12,6 +12,7 @@ import static enums.SuiteGroups.SoftServeGroup;
 @Epic("Smoke Tests")
 @Feature("Search Tests")
 public class SoftServeTest extends BaseUITest {
+
     @Inject
     private SoftServePage softServePage;
 

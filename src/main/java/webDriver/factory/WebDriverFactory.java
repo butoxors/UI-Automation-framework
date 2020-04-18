@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static config.Configuration.webDriverName;
 
 public class WebDriverFactory {
+
     public WebDriver createWebDriver(DriverType driverType) {
         WebDriver driver;
         switch (driverType) {
@@ -21,7 +22,7 @@ public class WebDriverFactory {
     }
 
     protected WebDriver createChromeDriver() {
-        String prefix = System.getProperty("os.name").contains("Win") ? ".exe" : "";
+        String prefix = System.getProperty("os.name").equalsIgnoreCase("Linux") ? "" : ".exe";
         System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/" + webDriverName + prefix);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized"); // open Browser in maximized mode

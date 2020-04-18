@@ -10,6 +10,7 @@ import webDriver.WebDriverManager;
 
 @Listeners({TestNGCustomListener.class})
 public abstract class BaseUITest {
+
     @Inject
     private WebDriverManager webDriverManager;
 

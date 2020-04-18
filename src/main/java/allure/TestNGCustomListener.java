@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import webDriver.WebDriverContainer;
 
 public class TestNGCustomListener implements ITestListener {
+
     @Override
     public void onTestStart(ITestResult iTestResult) {
 
@@ -46,8 +47,6 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        if (WebDriverContainer.getWebDriver() != null)
-            WebDriverContainer.getWebDriver().quit();
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")

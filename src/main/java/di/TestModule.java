@@ -7,8 +7,6 @@ import utils.WebDriverWaitUtils;
 import webDriver.WebDriverManager;
 
 public class TestModule extends AbstractModule {
-    public TestModule() {
-    }
 
     @Override
     protected void configure() {

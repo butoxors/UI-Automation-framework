@@ -32,7 +32,6 @@ public final class WebDriverManager implements Provider<WebDriver> {
     }
 
     public final void manageWebDriver() {
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(implicitWaitTimeOut, TimeUnit.SECONDS);
         driver.navigate().to(Configuration.url);
     }

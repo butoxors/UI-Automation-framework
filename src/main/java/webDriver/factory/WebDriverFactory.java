@@ -24,7 +24,11 @@ public class WebDriverFactory {
         String prefix = System.getProperty("os.name").contains("Win") ? ".exe" : "";
         System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/" + webDriverName + prefix);
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--no-sandbox");
+        options.addArguments("start-maximized"); // open Browser in maximized mode
+        options.addArguments("disable-infobars"); // disabling infobars
+        options.addArguments("--disable-extensions"); // disabling extensions
+        options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+        options.addArguments("--no-sandbox"); // Bypass OS security model
         return new ChromeDriver(options);
     }
 }

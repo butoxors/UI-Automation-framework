@@ -138,7 +138,7 @@
                 <configuration>
                     <forkCount>0</forkCount>
                     <skipTests>false</skipTests>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"

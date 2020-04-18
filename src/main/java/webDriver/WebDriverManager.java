@@ -13,10 +13,10 @@ import static config.Configuration.implicitWaitTimeOut;
 
 public final class WebDriverManager implements Provider<WebDriver> {
 
-    @Inject
     private WebDriver driver;
     private static final DriverType DRIVER_TYPE = Configuration.driverType;
 
+    @Inject
     public WebDriverManager() {
         this.createDriver();
         this.manageWebDriver();
@@ -39,7 +39,7 @@ public final class WebDriverManager implements Provider<WebDriver> {
         driver.navigate().to(Configuration.url);
     }
 
-    public final void tearDown(boolean closeBrowser) {
+    public void tearDown(boolean closeBrowser) {
         if (closeBrowser) {
             driver.quit();
         }

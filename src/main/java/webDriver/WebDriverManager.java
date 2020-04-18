@@ -1,6 +1,5 @@
 package webDriver;
 
-import com.google.inject.Inject;
 import com.google.inject.Provider;
 import config.Configuration;
 import enums.DriverType;
@@ -16,7 +15,6 @@ public final class WebDriverManager implements Provider<WebDriver> {
     private WebDriver driver;
     private static final DriverType DRIVER_TYPE = Configuration.driverType;
 
-    @Inject
     public WebDriverManager() {
         this.createDriver();
         this.manageWebDriver();
@@ -35,6 +33,7 @@ public final class WebDriverManager implements Provider<WebDriver> {
     }
 
     public final void manageWebDriver() {
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(implicitWaitTimeOut, TimeUnit.SECONDS);
         driver.navigate().to(Configuration.url);
     }

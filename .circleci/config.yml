@@ -42,22 +42,19 @@ commands:
                 -Dsuite=<< parameters.suite >>
                 verify test
 
-            - allure-report:
-                  results-path: target/allure-results
-                  artifact-archive: allure-<< parameters.suite >>.tar
+            - run:
+                  name: Archive artifacts
+                  when: always
+                  command: >
+                      tar -cvf artifacts-<< parameters.suite >>.tar;
+                      target/test-log
+                      target/test-output;
             - run:
                   name: Remove redundant test results
                   when: always
                   command: |
                       cd target/test-output
                       rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
-            - run:
-                name: Archive artifacts
-                when: always
-                command: >
-                    tar -cvf artifacts-<< parameters.suite >>.tar;
-                    target/test-log
-                    target/test-output;
             - store_artifacts:
                 path: artifacts-<< parameters.suite >>.tar
             - run:
@@ -68,6 +65,9 @@ commands:
                       rm -r -f old junitreports TEST-TestSuite.xml testng-failed.xml testng-results.xml
             - store_test_results:
                 path: target/test-output
+            - allure-report:
+                  results-path: target/allure-results
+                  artifact-archive: allure-<< parameters.suite >>.tar
 
     allure-install:
         description: Installs Allure Framework and registers it as /usr/local/bin/allure

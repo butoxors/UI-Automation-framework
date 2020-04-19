@@ -4,7 +4,9 @@
 
     <test name="testng">
         <classes>
-            <class name="ui.SoftServeTest" />
+            <class name="ui.SoftServeTest">
+                <parameter name="invocationCount" value="10" />
+            </class>
         </classes>
     </test>
 

@@ -2,6 +2,7 @@ package ui;
 
 import com.google.inject.Inject;
 import io.qameta.allure.*;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObject.SoftServePage;
 
@@ -18,6 +19,7 @@ public class SoftServeTest extends BaseUITest {
 
     @Test(description = "Test of SoftServe search",
             groups = {SoftServeGroup})
+    @Parameters({"invocationCount"})
     @Description("Verify that query result is presence in search")
     @Issue("COM-1")
     @Severity(SeverityLevel.NORMAL)
@@ -30,6 +32,7 @@ public class SoftServeTest extends BaseUITest {
 
     @Test(description = "Test of SoftServe search",
             groups = {SoftServeGroup})
+    @Parameters({"invocationCount"})
     @Description("Verify that query result is presence in search")
     @Issue("COM-2")
     @Severity(SeverityLevel.NORMAL)
@@ -41,6 +44,7 @@ public class SoftServeTest extends BaseUITest {
 
     @Test(description = "Test of SoftServe search",
             groups = {SoftServeGroup})
+    @Parameters({"invocationCount"})
     @Description("Verify that query result is presence in search")
     @Issue("COM-3")
     @Severity(SeverityLevel.NORMAL)
@@ -53,6 +57,7 @@ public class SoftServeTest extends BaseUITest {
 
     @Test(description = "Test of SoftServe search",
             groups = {SoftServeGroup})
+    @Parameters({"invocationCount"})
     @Description("Verify that query result is presence in search")
     @Issue("COM-4")
     @Severity(SeverityLevel.NORMAL)

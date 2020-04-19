@@ -1,7 +1,6 @@
 package utils;
 
 import config.Configuration;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,13 +9,18 @@ import webDriver.WebDriverContainer;
 
 public final class WebDriverWaitUtils {
 
-    public static void waitForElement(long timeOutInSeconds, WebElement element) {
+    public static WebElement waitForElement(long timeOutInSeconds, WebElement element) {
         WebDriverWait webDriverWait = new WebDriverWait(WebDriverContainer.getWebDriver(), timeOutInSeconds);
         webDriverWait.until(d -> element.isDisplayed() & element.isSelected() & element.isEnabled());
+        try {
+            return element;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
-    public static void waitForElement(WebElement element) {
-        waitForElement(Configuration.explicitWaitTimeOut, element);
+    public static WebElement waitForElement(WebElement element) {
+        return waitForElement(Configuration.explicitWaitTimeOut, element);
     }
 
     public static void waitAndClick(long timeOutInSeconds, WebElement element) {

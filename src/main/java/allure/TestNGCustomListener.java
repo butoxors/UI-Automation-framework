@@ -18,7 +18,6 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-
     }
 
     @Override

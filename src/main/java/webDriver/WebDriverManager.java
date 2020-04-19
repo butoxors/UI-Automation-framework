@@ -10,7 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import static config.Configuration.implicitWaitTimeOut;
 
-public class WebDriverManager implements Provider<WebDriver> {
+public final class WebDriverManager implements Provider<WebDriver> {
+
     private WebDriver driver;
     private static final DriverType DRIVER_TYPE = Configuration.driverType;
 
@@ -37,7 +38,7 @@ public class WebDriverManager implements Provider<WebDriver> {
         driver.navigate().to(Configuration.url);
     }
 
-    public final void tearDown(boolean closeBrowser) {
+    public void tearDown(boolean closeBrowser) {
         if (closeBrowser) {
             driver.quit();
         }

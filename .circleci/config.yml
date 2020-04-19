@@ -1,0 +1,130 @@
+version: 2.1
+
+executors:
+    my-executor:
+        docker:
+            - image: circleci/openjdk:11.0.6-jdk-buster
+        working_directory: ~/repo
+        environment:
+            # Customize the JVM maximum heap limit
+            MAVEN_OPTS: -Xmx3200m
+
+orbs:
+    slack: circleci/slack@3.4.2
+
+commands:
+    setup-project:
+        parameters:
+            suite:
+                type: string
+        description: "Setup project"
+        steps:
+            - allure-install
+            - checkout
+            - restore_cache:
+                  keys:
+                      - v2-dependencies-{{ checksum "pom.xml" }}
+                      - v2-dependencies-
+            - run: mvn dependency:go-offline
+            - save_cache:
+                  paths:
+                      - ~/.m2
+                  key: v2-dependencies-{{ checksum "pom.xml" }}
+
+            - run: sudo apt-get update
+            - run: sudo apt-get install libnss3-dev
+            - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            - run: sudo apt install ./google-chrome-stable_current_amd64.deb
+            - run: chmod 777 /home/circleci/repo/src/test/resources/webdrivers/chromedriver
+
+            - run: >
+                mvn
+                -Dsuite=<< parameters.suite >>
+                verify test
+
+            - store_artifacts:
+                path: artifacts-<< parameters.suite >>.tar
+            - store_test_results:
+                path: target/test-output
+            - allure-report:
+                  results-path: target/allure-results
+                  artifact-archive: allure-<< parameters.suite >>.tar
+
+    allure-install:
+        description: Installs Allure Framework and registers it as /usr/local/bin/allure
+        parameters:
+            version:
+                description: Allure version to use
+                type: string
+                default: 2.13.1
+        steps:
+            - run:
+                name: Allure archive download
+                command: curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
+            - run:
+                name: Archive extraction
+                command: unzip /tmp/allure.zip
+            - run:
+                name: Allure installation
+                command: sudo mv allure-<< parameters.version >> /usr/local/share/allure
+            - run:
+                name: Allure binary symlinking
+                command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
+
+    allure-report:
+        description: Generates report using Allure Framework
+        parameters:
+            configuration-path:
+                description: Path to Allure configuration, uses default one if omitted
+                type: string
+                default: /usr/local/share/allure/config/allure.yml
+            target-path:
+                description: Path for report directory
+                type: string
+                default: allure-report
+            results-path:
+                description: Path to directory with test results
+                type: string
+                default: allure-results
+            artifact-path:
+                description: Path that will be used when storing result as artifact
+                type: string
+                default: Report/Allure
+            artifact-archive:
+                description: Archive name that will be used for storing artifact archive
+                type: string
+                default: allure-artifacts.tar
+        steps:
+            - run:
+                  name: Allure report generation (<< parameters.results-path >> -> << parameters.target-path >>)
+                  when: always
+                  command: |
+                      allure generate \
+                        --config << parameters.configuration-path >> \
+                        --report-dir << parameters.target-path >> \
+                        << parameters.results-path >>
+            - run:
+                  name: Archive Allure artifacts
+                  when: always
+                  command: >
+                      tar -cvf << parameters.artifact-archive >>
+                      << parameters.target-path >>
+                      << parameters.results-path >>;
+            - store_artifacts:
+                path: << parameters.target-path >>
+                destination: << parameters.artifact-path >>
+            - store_artifacts:
+                path: << parameters.artifact-archive >>
+
+jobs:
+    general_job:
+        executor: my-executor
+        steps:
+            - setup-project:
+                suite: "testng"
+
+workflows:
+    version: 2.1
+    workflow:
+        jobs:
+            - general_job

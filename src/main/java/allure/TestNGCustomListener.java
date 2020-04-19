@@ -1,8 +1,6 @@
 package allure;
 
-import config.Configuration;
 import io.qameta.allure.Attachment;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -11,13 +9,8 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import webDriver.WebDriverContainer;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-
 public class TestNGCustomListener implements ITestListener {
+
     @Override
     public void onTestStart(ITestResult iTestResult) {
 
@@ -30,7 +23,9 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        saveScreenshotPNG(WebDriverContainer.getWebDriver());
+        if (WebDriverContainer.getWebDriver() != null) {
+            saveScreenshotPNG(WebDriverContainer.getWebDriver());
+        }
         if (result.getThrowable() != null)
             result.getThrowable().printStackTrace();
     }
@@ -52,7 +47,6 @@ public class TestNGCustomListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")

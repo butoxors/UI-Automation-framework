@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="testng" verbose="1">
+<suite name="testng" verbose="5">
 
-    <test name="SoftServe">
-        <packages>
-            <package name="ui.*" />
-        </packages>
+    <test name="testng">
         <classes>
             <class name="ui.SoftServeTest" />
         </classes>

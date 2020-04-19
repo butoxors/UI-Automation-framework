@@ -8,6 +8,7 @@ import static org.testng.Assert.assertTrue;
 import static utils.WebDriverWaitUtils.waitAndSendText;
 
 public class SoftServePage extends BasePage {
+
     private final String btnSearch = "//a[contains(@class, 'search')]";
     private final String inpSearchBox = "//input[@type='text']";
     private final String lblSearchResults = "//div[@class='search-page__list']//h3";

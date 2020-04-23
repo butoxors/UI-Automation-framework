@@ -5,6 +5,14 @@
 * Multi-browsers
 * Circle Ci integration
 
+### Used technologies:
+* Allure
+* Google Guice
+* Lombock
+* TestNG
+* Selenium
+* AssertJ
+
 ### How to use?
 > 
 * Open bash
